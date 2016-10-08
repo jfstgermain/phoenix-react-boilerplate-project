@@ -5,6 +5,11 @@
 /*.ez
 /node_modules
 
+# Ignore compiled frontend assets
+/priv/static/js
+/priv/static/css
+/priv/static/fonts
+
 # Generated on crash by the VM
 erl_crash.dump
 
