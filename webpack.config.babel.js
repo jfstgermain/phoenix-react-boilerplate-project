@@ -1,30 +1,60 @@
-"use strict"
+'use strict';
 
-const config = {
-  entry: "./web/static/js/app.js",
+let path = require('path');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let webpack = require('webpack');
+
+function join(dest) { return path.resolve(__dirname, dest); }
+
+function web(dest) { return join('web/static/' + dest); }
+
+const config = module.exports = {
+  entry: {
+    application: [
+      web('stylesheets/app.scss'),
+      web('js/app.js'),
+    ],
+  },
+
   output: {
-    path: "./priv/static",
-    filename: "js/app.js",
+    path: join('priv/static'),
+    filename: 'js/app.js',
+  },
+
+  resolve: {
+    extensions: ['', '.js', '.scss'],
+    modulesDirectories: ['node_modules'],
   },
 
   module: {
+    noParse: /vendor\/phoenix/,
     loaders: [
       {
         test: /\.js$/,
-        loader: "babel-loader",
-        query: { presets: ["es2015"], },
+        exclude: /node_modules/,
+        loader: 'babel',
+        query: {
+          cacheDirectory: true,
+          plugins: ['transform-decorators-legacy'],
+          presets: ['react', 'es2015'],
+          // presets: ['react', 'es2015', 'stage-2', 'stage-0'],
+        },
       },
-	  // Run .scss files through the SASS and CSS loaders
-	  {
-	    test: /\.scss$/,
-	    loader: "css!sass",
-	  },
       {
-        test: /\.(ttf|eot|svg|woff2?)$/,
-        loader : "file-loader?name=fonts/[name].[ext]",
-      },	
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('style', 'css!sass?indentedSyntax&includePaths[]=' + __dirname +  '/node_modules'),
+      },
     ],
   },
+
+  plugins: [
+    new ExtractTextPlugin('stylesheets/app.css'),
+  ],
 };
 
-export default config;
+if (process.env.NODE_ENV === 'production') {
+  config.plugins.push(
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({ minimize: true })
+  );
+}
