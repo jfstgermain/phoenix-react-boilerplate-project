@@ -20,11 +20,6 @@ const initialState = {
   channel: null,
 };
 
-const toto = (pipo) => {
-  console.log('ssdsdsdd');
-  return pipo;
-};
-
 export default createReducer(initialState, {
   USER_LOGIN_REQUEST: (state) => {
     ...state,
