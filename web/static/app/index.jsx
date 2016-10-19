@@ -14,6 +14,10 @@ const Root = ({ routerHistory, store }) => {
     '<Root /> needs either a routingContext or routerHistory to render.'
   );
 
+  invariant(
+    store, '<Root /> needs a store to render.'
+  );
+
   return (
     <Provider store={store}>
       { configureRoutes(store, routerHistory) }
