@@ -1,12 +1,12 @@
 import { push } from 'react-router-redux';
 import { CommonConstants } from '../../../constants';
 import { httpPost } from '../../../utils';
-import {setCurrentUser} from './sessions';
+import { setCurrentUser } from '../../session/actions';
 
 const Actions = {};
 
 Actions.signUp = (data) => {
-  return dispatch => {
+  return (dispatch) => {
     httpPost('/api/v1/registrations', { user: data })
     .then((data) => {
       localStorage.setItem('phoenixAuthToken', data.jwt);

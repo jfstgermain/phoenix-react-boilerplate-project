@@ -11,21 +11,30 @@ defmodule GetLuckyWt.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Guardian.Plug.VerifyHeader
+    plug Guardian.Plug.LoadResource
   end
+
+  # scope "/api", GetLuckyWt do
+  #   pipe_through :api
+  #
+  #   scope "/v1" do
+  #     post "/registrations", RegistrationController, :create
+  #
+  #     post "/sessions", SessionController, :create
+  #     delete "/sessions", SessionController, :delete
+  #
+  #     get "/current_user", CurrentUserController, :show
+  #
+  #     resources "/boards", BoardController, only: [:index, :create] do
+  #       resources "/cards", CardController, only: [:show]
+  #     end
+  #   end
+  # end
 
   scope "/", GetLuckyWt do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PostController, :index
-    resources "/posts", PostController
-
-    resources "/users", UserController do
-      resources "/posts", PostController
-    end
+    get "/*path", PageController, :index
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", GetLuckyWt do
-  #   pipe_through :api
-  # end
 end

@@ -1,1 +1,1 @@
-export {default as CommonConstants} from './common'
+export { default as CommonConstants } from './common';

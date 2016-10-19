@@ -1,8 +1,8 @@
-import React              from 'react';
-import { Provider }       from 'react-redux';
-import { Router }         from 'react-router';
-import invariant          from 'invariant';
-import routes             from '../config/routes';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router';
+import invariant from 'invariant';
+import routes from '../config/routes';
 
 export default class Root extends React.Component {
   _renderRouter() {

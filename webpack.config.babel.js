@@ -1,18 +1,16 @@
-'use strict';
-
-let path = require('path');
-let ExtractTextPlugin = require('extract-text-webpack-plugin');
-let webpack = require('webpack');
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
 
 function join(dest) { return path.resolve(__dirname, dest); }
 
-function web(dest) { return join('web/static/' + dest); }
+function web(dest) { return join(`web/static/${dest}`); }
 
 const config = module.exports = {
   entry: {
     application: [
       web('stylesheets/app.scss'),
-      web('js/app.js'),
+      web('app/index.jsx'),
     ],
   },
 
@@ -22,7 +20,7 @@ const config = module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.js', '.scss'],
+    extensions: ['', '.js', '.jsx', '.scss'],
     modulesDirectories: ['node_modules'],
   },
 
@@ -30,19 +28,18 @@ const config = module.exports = {
     noParse: /vendor\/phoenix/,
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel',
         query: {
           cacheDirectory: true,
           plugins: ['transform-decorators-legacy'],
-          presets: ['react', 'es2015'],
-          // presets: ['react', 'es2015', 'stage-2', 'stage-0'],
+          presets: ['react', 'es2015', 'stage-2', 'stage-0'],
         },
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style', 'css!sass?indentedSyntax&includePaths[]=' + __dirname +  '/node_modules'),
+        loader: ExtractTextPlugin.extract('style', `css!sass?indentedSyntax&includePaths[]=${__dirname}/node_modules`),
       },
     ],
   },

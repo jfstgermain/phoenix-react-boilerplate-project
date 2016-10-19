@@ -15,7 +15,7 @@ export function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   } else {
-    var error = new Error(response.statusText);
+    const error = new Error(response.statusText);
     error.response = response;
     throw error;
   }
@@ -26,7 +26,6 @@ export function parseJSON(response) {
 }
 
 export function httpGet(url) {
-
   return fetch(url, {
     headers: buildHeaders(),
   })
@@ -40,14 +39,13 @@ export function httpPost(url, data) {
   return fetch(url, {
     method: 'post',
     headers: buildHeaders(),
-    body: body,
+    body,
   })
   .then(checkStatus)
   .then(parseJSON);
 }
 
 export function httpDelete(url) {
-
   return fetch(url, {
     method: 'delete',
     headers: buildHeaders(),
@@ -73,4 +71,12 @@ export function renderErrorsFor(errors, ref) {
     }
   });
 }
-Contact GitHub
+
+export function createReducer(initialState, reducerMap) {
+  return (state = initialState, action) => {
+    const reducer = reducerMap[action.type];
+    return reducer ?
+      reducer(state, action.payload) :
+      state;
+  };
+}

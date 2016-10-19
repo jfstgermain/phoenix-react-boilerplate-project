@@ -1,9 +1,9 @@
-import React, {PropTypes}   from 'react';
-import { connect }          from 'react-redux';
-import { Link }             from 'react-router';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 import { setDocumentTitle, renderErrorsFor } from '../../utils';
-import Actions              from '../../actions/registrations';
+import Actions from './actions/index';
 
 class RegistrationsNew extends React.Component {
   componentDidMount() {
@@ -37,23 +37,23 @@ class RegistrationsNew extends React.Component {
           </header>
           <form id="sign_up_form" onSubmit={this._handleSubmit}>
             <div className="field">
-              <input ref="firstName" id="user_first_name" type="text" placeholder="First name" required={true} />
+              <input ref="firstName" id="user_first_name" type="text" placeholder="First name" required />
               {renderErrorsFor(errors, 'first_name')}
             </div>
             <div className="field">
-              <input ref="lastName" id="user_last_name" type="text" placeholder="Last name" required={true} />
+              <input ref="lastName" id="user_last_name" type="text" placeholder="Last name" required />
               {renderErrorsFor(errors, 'last_name')}
             </div>
             <div className="field">
-              <input ref="email" id="user_email" type="email" placeholder="Email" required={true} />
+              <input ref="email" id="user_email" type="email" placeholder="Email" required />
               {renderErrorsFor(errors, 'email')}
             </div>
             <div className="field">
-              <input ref="password" id="user_password" type="password" placeholder="Password" required={true} />
+              <input ref="password" id="user_password" type="password" placeholder="Password" required />
               {renderErrorsFor(errors, 'password')}
             </div>
             <div className="field">
-              <input ref="passwordConfirmation" id="user_password_confirmation" type="password" placeholder="Confirm password" required={true} />
+              <input ref="passwordConfirmation" id="user_password_confirmation" type="password" placeholder="Confirm password" required />
               {renderErrorsFor(errors, 'password_confirmation')}
             </div>
             <button type="submit">Sign up</button>
@@ -65,7 +65,7 @@ class RegistrationsNew extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   errors: state.registration.errors,
 });
 
